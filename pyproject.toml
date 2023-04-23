@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=67.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "AshenDB"
+version = "0.0.1"
+description = "Another stupid library for using json as Database"
+readme = "README.rst"
+authors = [{name = "Abdullah Al Muaz", email = "abdullahalmuaz15@gmail.com"}]
+license = {file = "LICENSE"}
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "License :: OSI Approved :: MIT License",
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+]
+keywords = ["json", "mongodb", "database", "embedded-database", "serverless"]
+dependencies = [
+    "aiofiles",
+]
+requires-python = ">=3.10"
+
+[project.urls]
+Homepage = "https://github.com/aurkaxi/AshenDB"
+Documentation = "https://ashendb.rtfd.io"
+
+[project.scripts]
+ashendb = "ashendb.__main__:main"
