@@ -1,3 +1,7 @@
+.. image:: https://readthedocs.org/projects/ashendb/badge/?version=latest
+    :target: https://ashendb.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+      
 AshenDB
 =======
 
