@@ -1,15 +1,15 @@
-                                           ╭── document1.json
-                         ╭── collection1 ──┤
-                         │                 ╰── document2.json
-         ╭── database1 ──┤
-         │               │                 ╭── document3.json
-         │               ╰── collection2 ──┤
-         │                                 ╰── document4.json
+                                             ╭── document1.json
+                           ╭── collection1 ──┤
+                           │                 ╰── document2.json
+           ╭── database1 ──┤
+           │               │                 ╭── document3.json
+           │               ╰── collection2 ──┤
+           │                                 ╰── document4.json
 .ashendb ══╡
-         │                                 ╭── document5.json
-         │               ╭── collection3 ──┤
-         │               │                 ╰── document6.json
-         ╰── database2 ──┤
-                         │                 ╭── document7.json
-                         ╰── collection4 ──┤
-                                           ╰── document8.json
+           │                                 ╭── document5.json
+           │               ╭── collection3 ──┤
+           │               │                 ╰── document6.json
+           ╰── database2 ──┤
+                           │                 ╭── document7.json
+                           ╰── collection4 ──┤
+                                             ╰── document8.json

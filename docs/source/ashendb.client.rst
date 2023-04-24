@@ -5,3 +5,4 @@ ashendb.client module
    :members:
    :undoc-members:
    :show-inheritance:
+   :noindex: ashendb.client.AshenDB.base

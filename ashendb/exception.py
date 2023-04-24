@@ -1,6 +1,10 @@
-class DocumentNotFound(Exception):
+class NotFound(Exception):
     pass
 
 
-class CollectionNotFound(Exception):
+class AlreadyExists(Exception):
+    pass
+
+
+class InvalidArgumentType(Exception):
     pass

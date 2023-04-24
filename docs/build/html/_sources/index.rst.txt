@@ -8,10 +8,6 @@ AshenDB's documentation!
 
 **AshenDB** is an asynchronous Python library to use json as a database in your workspace with similar functionality to MongoDB.
 
-.. note ::
-
-   This project is under active development.
-
 **Features**
 
 - Located in user's workspace
@@ -26,20 +22,19 @@ To use AshenDB, first Intall it using pip:
 
 .. code-block:: console
 
-    $ pip install ashendb
+   $ pip install -U ashendb
 
 Then, import it in your project. 
 
 .. code-block:: python
     
-    from ashendb import AshenDB
+   from ashendb import AshenDB
 
 This will automatically create ``.ashendb`` folder in your project directory.
 
 **Database Structure**
 
 .. literalinclude:: folder_structure.txt
-   :language: text
 
 
 Manuals

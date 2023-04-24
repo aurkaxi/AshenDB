@@ -3,6 +3,13 @@ import aiofiles.os as aios
 
 
 async def main() -> None:
+    """Valiadates ".ashendb" directory.
+
+    Directory is created if it does not exist.
+
+    Raises:
+        Exception: If a file named ".ashendb" already exists.
+    """
     exists = await aios.path.exists(".ashendb")
     if exists:
         is_dir = await aios.path.isdir(".ashendb")

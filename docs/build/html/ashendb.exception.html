@@ -6,10 +6,11 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ashendb.helper module" href="ashendb.helper.html" /><link rel="prev" title="ashendb.document module" href="ashendb.document.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
-        <title>ashendb.exception module - AshenDB 1.0.0 documentation</title>
+        <title>ashendb.exception module - AshenDB 0.0.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="_static/css/overwrite.css" />
     
     
 
@@ -22,14 +23,60 @@
   }
   @media not print {
     body[data-theme="dark"] {
-      --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+      --color-code-background: #282a36;
+  --color-code-foreground: #f8f8f2;
+  --color-foreground-primary: #d9dad8;
+  --color-foreground-secondary: #75a9a4;
+  --color-foreground-muted: #6d7c99;
+  --color-background-border: #6d7c99;
+  --color-background-primary: #0d0e10;
+  --color-background-secondary: #333437;
+  --color-background-hover: #405256;
+  --color-background-hover--transparent: #40525600;
+  --color-background-item: #333437;
+  --color-announcement-background: #a55d80;
+  --color-announcement-text: #d9dad8;
+  --color-brand-primary: #75a9a4;
+  --color-brand-content: #88c0d0;
+  --color-highlight-background: #6d7c99;
+  --color-guilabel-background: #6d7c9900;
+  --color-guilabel-border: #33343780;
+  --color-api-keyword: #75a9a4;
+  --color-highlight-on-target: #405256;
+  --color-api-background: #1d232c;
+  --color-admonition-background: #6d7c99;
+  --color-card-border: #333437;
+  --color-card-background: #6d7c99;
+  --color-card-marginal-background: #405256;
   
     }
     @media (prefers-color-scheme: dark) {
       body:not([data-theme="light"]) {
-        --color-code-background: #202020;
-  --color-code-foreground: #d0d0d0;
+        --color-code-background: #282a36;
+  --color-code-foreground: #f8f8f2;
+  --color-foreground-primary: #d9dad8;
+  --color-foreground-secondary: #75a9a4;
+  --color-foreground-muted: #6d7c99;
+  --color-background-border: #6d7c99;
+  --color-background-primary: #0d0e10;
+  --color-background-secondary: #333437;
+  --color-background-hover: #405256;
+  --color-background-hover--transparent: #40525600;
+  --color-background-item: #333437;
+  --color-announcement-background: #a55d80;
+  --color-announcement-text: #d9dad8;
+  --color-brand-primary: #75a9a4;
+  --color-brand-content: #88c0d0;
+  --color-highlight-background: #6d7c99;
+  --color-guilabel-background: #6d7c9900;
+  --color-guilabel-border: #33343780;
+  --color-api-keyword: #75a9a4;
+  --color-highlight-on-target: #405256;
+  --color-api-background: #1d232c;
+  --color-admonition-background: #6d7c99;
+  --color-card-border: #333437;
+  --color-card-background: #6d7c99;
+  --color-card-marginal-background: #405256;
   
       }
     }
@@ -112,7 +159,11 @@
   <div class="visually-hidden">Hide table of contents sidebar</div>
 </label>
 
-
+<div class="announcement">
+  <aside class="announcement-content">
+     <em>Important</em>: This is a pre-release version of AshenDB. It is not recommended for production use. 
+  </aside>
+</div>
 
 <div class="page">
   <header class="mobile-header">
@@ -123,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">AshenDB 1.0.0 documentation</div></a>
+      <a href="index.html"><div class="brand">AshenDB 0.0.1 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -145,8 +196,10 @@
       
       <div class="sidebar-sticky"><a class="sidebar-brand" href="index.html">
   
+  <div class="sidebar-logo-container">
+    <img class="sidebar-logo" src="_static/AshenDB_Logo.png" alt="Logo"/>
+  </div>
   
-  <span class="sidebar-brand-text">AshenDB 1.0.0 documentation</span>
   
 </a><form class="sidebar-search-container" method="get" action="search.html" role="search">
   <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
@@ -198,14 +251,20 @@
           <section id="module-ashendb.exception">
 <span id="ashendb-exception-module"></span><h1>ashendb.exception module<a class="headerlink" href="#module-ashendb.exception" title="Permalink to this heading">#</a></h1>
 <dl class="py exception">
-<dt class="sig sig-object py" id="ashendb.exception.DocumentNotFound">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.exception.</span></span><span class="sig-name descname"><span class="pre">DocumentNotFound</span></span><a class="headerlink" href="#ashendb.exception.DocumentNotFound" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ashendb.exception.NotFound">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.exception.</span></span><span class="sig-name descname"><span class="pre">NotFound</span></span><a class="headerlink" href="#ashendb.exception.NotFound" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
 <dl class="py exception">
-<dt class="sig sig-object py" id="ashendb.exception.CollectionNotFound">
-<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.exception.</span></span><span class="sig-name descname"><span class="pre">CollectionNotFound</span></span><a class="headerlink" href="#ashendb.exception.CollectionNotFound" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ashendb.exception.AlreadyExists">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.exception.</span></span><span class="sig-name descname"><span class="pre">AlreadyExists</span></span><a class="headerlink" href="#ashendb.exception.AlreadyExists" title="Permalink to this definition">#</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+</dd></dl>
+
+<dl class="py exception">
+<dt class="sig sig-object py" id="ashendb.exception.InvalidArgumentType">
+<em class="property"><span class="pre">exception</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.exception.</span></span><span class="sig-name descname"><span class="pre">InvalidArgumentType</span></span><a class="headerlink" href="#ashendb.exception.InvalidArgumentType" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
 </dd></dl>
 
@@ -267,8 +326,9 @@
           <div class="toc-tree">
             <ul>
 <li><a class="reference internal" href="#">ashendb.exception module</a><ul>
-<li><a class="reference internal" href="#ashendb.exception.DocumentNotFound"><code class="docutils literal notranslate"><span class="pre">DocumentNotFound</span></code></a></li>
-<li><a class="reference internal" href="#ashendb.exception.CollectionNotFound"><code class="docutils literal notranslate"><span class="pre">CollectionNotFound</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.exception.NotFound"><code class="docutils literal notranslate"><span class="pre">NotFound</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.exception.AlreadyExists"><code class="docutils literal notranslate"><span class="pre">AlreadyExists</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.exception.InvalidArgumentType"><code class="docutils literal notranslate"><span class="pre">InvalidArgumentType</span></code></a></li>
 </ul>
 </li>
 </ul>

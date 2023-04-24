@@ -1,0 +1,14 @@
+.highlight {
+    width: 94%;
+    overflow: auto;
+    border-radius: 0.5rem;
+}
+
+dl.py.method {
+    background: linear-gradient(
+        to bottom,
+        #0f141a 0%,
+        #0e1115 50%,
+        #0d0e10 100%
+    );
+}
