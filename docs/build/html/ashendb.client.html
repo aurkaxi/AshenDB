@@ -185,7 +185,7 @@
           <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
         </button>
       </div>
-      <label class="toc-overlay-icon toc-header-icon no-toc" for="__toc">
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
         <div class="visually-hidden">Toggle table of contents sidebar</div>
         <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
       </label>
@@ -242,38 +242,27 @@
               <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
             </button>
           </div>
-          <label class="toc-overlay-icon toc-content-icon no-toc" for="__toc">
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
             <div class="visually-hidden">Toggle table of contents sidebar</div>
             <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
           </label>
         </div>
         <article role="main">
-          <section id="ashendb-client-module">
-<h1>ashendb.client module<a class="headerlink" href="#ashendb-client-module" title="Permalink to this heading">#</a></h1>
+          <section id="module-ashendb.client">
+<span id="ashendb-client-module"></span><h1>ashendb.client module<a class="headerlink" href="#module-ashendb.client" title="Permalink to this heading">#</a></h1>
 <dl class="py class">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.client.</span></span><span class="sig-name descname"><span class="pre">AshenDB</span></span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.client.</span></span><span class="sig-name descname"><span class="pre">AshenDB</span></span><a class="headerlink" href="#ashendb.client.AshenDB" title="Permalink to this definition">#</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
 <p>Entry point for AshenDB. This class is used to create, get, and delete databases.</p>
 <dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">base</span></span></dt>
-<dd><p>The path. Which is always “.ashendb/”. You are not supposed to change this.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>str</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py">
-<span class="sig-name descname"><span class="pre">base</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.ashendb/'</span></em></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.base">
+<span class="sig-name descname"><span class="pre">base</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'.ashendb/'</span></em><a class="headerlink" href="#ashendb.client.AshenDB.base" title="Permalink to this definition">#</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a></span></span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_db">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a></span></span><a class="headerlink" href="#ashendb.client.AshenDB.get_db" title="Permalink to this definition">#</a></dt>
 <dd><p>Get a single database from database name.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -289,8 +278,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_dbs">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.get_dbs" title="Permalink to this definition">#</a></dt>
 <dd><p>Get multiple databases.</p>
 <p>From a list of database names. If no list is provided or the list is empty, all databases are returned.</p>
 <dl class="field-list simple">
@@ -343,8 +332,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a></span></span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.create_db">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a></span></span><a class="headerlink" href="#ashendb.client.AshenDB.create_db" title="Permalink to this definition">#</a></dt>
 <dd><p>Creates a single database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -360,8 +349,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.create_dbs">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.create_dbs" title="Permalink to this definition">#</a></dt>
 <dd><p>Create multiple databases.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -371,8 +360,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_and_delete_db">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.get_and_delete_db" title="Permalink to this definition">#</a></dt>
 <dd><p>Delete a single database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -382,8 +371,8 @@
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_and_delete_dbs">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.get_and_delete_dbs" title="Permalink to this definition">#</a></dt>
 <dd><p>Delete multiple databases.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -439,8 +428,36 @@
         
       </footer>
     </div>
-    <aside class="toc-drawer no-toc">
+    <aside class="toc-drawer">
       
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">ashendb.client module</a><ul>
+<li><a class="reference internal" href="#ashendb.client.AshenDB"><code class="docutils literal notranslate"><span class="pre">AshenDB</span></code></a><ul>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.base"><code class="docutils literal notranslate"><span class="pre">AshenDB.base</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.get_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_db()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.get_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_dbs()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.create_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.create_db()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.create_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.create_dbs()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.get_and_delete_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_and_delete_db()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.get_and_delete_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_and_delete_dbs()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
       
       
     </aside>

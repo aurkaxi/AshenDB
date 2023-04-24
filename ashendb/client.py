@@ -11,8 +11,6 @@ class AshenDB(str):
     """
     Entry point for AshenDB. This class is used to create, get, and delete databases.
 
-    Attributes:
-        base: The path. Which is always ".ashendb/". You are not supposed to change this.
     """
 
     base: str = ".ashendb/"
