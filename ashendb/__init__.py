@@ -5,7 +5,7 @@ import aiofiles.os as aios
 async def main() -> None:
     """Valiadates ".ashendb" directory.
 
-    Directory is created if it does not exist.
+    Everytime AshenDB is imported, this function will be called to validate the ".ashendb" directory.
 
     Raises:
         Exception: If a file named ".ashendb" already exists.

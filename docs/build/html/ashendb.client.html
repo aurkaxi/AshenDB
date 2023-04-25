@@ -3,7 +3,7 @@
   <head><meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1"/>
     <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
-<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ashendb.collection module" href="ashendb.collection.html" /><link rel="prev" title="AshenDB’s documentation!" href="index.html" />
+<link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ashendb.database module" href="ashendb.database.html" /><link rel="prev" title="ashendb package" href="ashendb.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
         <title>ashendb.client module - AshenDB 0.0.1 documentation</title>
@@ -208,12 +208,15 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul class="current">
-<li class="toctree-l1 current current-page"><a class="current reference internal" href="#">ashendb.client module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.collection.html">ashendb.collection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.database.html">ashendb.database module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.document.html">ashendb.document module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.exception.html">ashendb.exception module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.helper.html">ashendb.helper module</a></li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="ashendb.html">ashendb package</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current current-page"><a class="current reference internal" href="#">ashendb.client module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.database.html">ashendb.database module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.collection.html">ashendb.collection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.document.html">ashendb.document module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.helper.html">ashendb.helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.exception.html">ashendb.exception module</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -275,60 +278,71 @@
 <dd class="field-odd"><p><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><em>Database</em></a></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_db</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span>
+<span class="go">&lt;Database: test&gt;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ashendb.client.AshenDB.get_dbs">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.get_dbs" title="Permalink to this definition">#</a></dt>
-<dd><p>Get multiple databases.</p>
-<p>From a list of database names. If no list is provided or the list is empty, all databases are returned.</p>
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">ashendb.database.Database</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.get_dbs" title="Permalink to this definition">#</a></dt>
+<dd><p>Get multiple databases from list of database names.</p>
+<p>If no list is provided or the list is empty, all databases are returned.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – A list of database names.</p>
+<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The names of the databases.</p>
 </dd>
 <dt class="field-even">Raises<span class="colon">:</span></dt>
 <dd class="field-even"><ul class="simple">
-<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.NotFound" title="ashendb.exception.NotFound"><strong>NotFound</strong></a> – If a database does not exist.</p></li>
 <li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.InvalidArgumentType" title="ashendb.exception.InvalidArgumentType"><strong>InvalidArgumentType</strong></a> – If the argument is not a list.</p></li>
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.NotFound" title="ashendb.exception.NotFound"><strong>NotFound</strong></a> – If one of the databases does not exist.</p></li>
 </ul>
 </dd>
-<dt class="field-odd">Yields<span class="colon">:</span></dt>
-<dd class="field-odd"><p><em>Database</em> – A database.</p>
-</dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p><em>Generator</em>[<a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><em>Database</em></a>, None, None]</p>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database">ashendb.database.Database</a>]</p>
 </dd>
 </dl>
 <p class="rubric">Example</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">([</span><span class="s2">&quot;db1&quot;</span><span class="p">,</span> <span class="s2">&quot;db2&quot;</span><span class="p">]):</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="go">db1</span>
-<span class="go">db2</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">([</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span>
+<span class="go">[&lt;Database: test&gt;, &lt;Database: test2&gt;]</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">():</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="go">db1</span>
-<span class="go">db2</span>
-<span class="go">db3</span>
-<span class="go">...</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span>
+<span class="go">[&lt;Database: test&gt;, &lt;Database: test2&gt;, &lt;Database: test3&gt;]</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">([]):</span>
-<span class="gp">&gt;&gt;&gt; </span>    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
-<span class="go">db1</span>
-<span class="go">db2</span>
-<span class="go">db3</span>
-<span class="go">...</span>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.iterate_dbs">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iterate_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.iterate_dbs" title="Permalink to this definition">#</a></dt>
+<dd><p>Iterate over multiple databases from list of database names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The names of the databases.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.InvalidArgumentType" title="ashendb.exception.InvalidArgumentType"><strong>InvalidArgumentType</strong></a> – If the argument is not a list.</p></li>
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.NotFound" title="ashendb.exception.NotFound"><strong>NotFound</strong></a> – If one of the databases does not exist.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Generator</em>[<a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><em>Database</em></a>, None, None]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">iterate_dbs</span><span class="p">([</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test2&quot;</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+<span class="go">&lt;Database: test&gt;</span>
+<span class="go">&lt;Database: test2&gt;</span>
 </pre></div>
 </div>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span> <span class="o">=</span> <span class="p">[</span><span class="n">db</span> <span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">get_dbs</span><span class="p">()]</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">dbs</span><span class="p">)</span>
-<span class="go">[db1, db2, db3, ...]</span>
-</pre></div>
-</div>
-<p class="rubric">Notes</p>
-<p>This is a generator. You must use a for loop to iterate through it. If you want to get a list, use list comprehension. See the last example.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -346,39 +360,108 @@
 <dd class="field-odd"><p><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><em>Database</em></a></p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">db</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">create_db</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">db</span>
+<span class="go">&lt;Database: test&gt;</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ashendb.client.AshenDB.create_dbs">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.create_dbs" title="Permalink to this definition">#</a></dt>
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">ashendb.database.Database</span></a><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.create_dbs" title="Permalink to this definition">#</a></dt>
 <dd><p>Create multiple databases.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em>) – </p>
+<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The names of the databases.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.AlreadyExists" title="ashendb.exception.AlreadyExists"><strong>AlreadyExists</strong></a> – If one of the databases already exists.</p></li>
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.InvalidArgumentType" title="ashendb.exception.InvalidArgumentType"><strong>InvalidArgumentType</strong></a> – If the argument is not a list or Empty or No Argument was passed.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[<a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database">ashendb.database.Database</a>]</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span> <span class="o">=</span> <span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">create_dbs</span><span class="p">([</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test2&quot;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">dbs</span>
+<span class="go">[&lt;Database: test&gt;, &lt;Database: test2&gt;]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_and_delete_db">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.get_and_delete_db" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.iterate_create_dbs">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">iterate_create_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Generator</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><span class="pre">Database</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">None</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.iterate_create_dbs" title="Permalink to this definition">#</a></dt>
+<dd><p>Iterate over multiple databases from list of database names.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The names of the databases.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.AlreadyExists" title="ashendb.exception.AlreadyExists"><strong>AlreadyExists</strong></a> – If one of the databases already exists.</p></li>
+<li><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.InvalidArgumentType" title="ashendb.exception.InvalidArgumentType"><strong>InvalidArgumentType</strong></a> – If the argument is not a list or Empty or No Argument was passed.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><em>Generator</em>[<a class="reference internal" href="ashendb.database.html#ashendb.database.Database" title="ashendb.database.Database"><em>Database</em></a>, None, None]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">async</span> <span class="k">for</span> <span class="n">db</span> <span class="ow">in</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">iterate_create_dbs</span><span class="p">([</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test2&quot;</span><span class="p">]):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">db</span><span class="p">)</span>
+<span class="go">&lt;Database: test&gt;</span>
+<span class="go">&lt;Database: test2&gt;</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.del_db">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">del_db</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.del_db" title="Permalink to this definition">#</a></dt>
 <dd><p>Delete a single database.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>db_name</strong> (<em>str</em>) – </p>
+<dd class="field-odd"><p><strong>db_name</strong> (<em>str</em>) – The name of the database.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.NotFound" title="ashendb.exception.NotFound"><strong>NotFound</strong></a> – If the database does not exist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">delete_db</span><span class="p">(</span><span class="s2">&quot;test&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ashendb.client.AshenDB.get_and_delete_dbs">
-<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">get_and_delete_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ashendb.client.AshenDB.get_and_delete_dbs" title="Permalink to this definition">#</a></dt>
+<dt class="sig sig-object py" id="ashendb.client.AshenDB.del_dbs">
+<em class="property"><span class="pre">async</span><span class="w"> </span><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">del_dbs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">db_names</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#ashendb.client.AshenDB.del_dbs" title="Permalink to this definition">#</a></dt>
 <dd><p>Delete multiple databases.</p>
+<p>If no list is provided or the list is empty, all databases are deleted.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em>) – </p>
+<dd class="field-odd"><p><strong>db_names</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The names of the databases.</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="ashendb.exception.html#ashendb.exception.NotFound" title="ashendb.exception.NotFound"><strong>NotFound</strong></a> – If one of the databases does not exist.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">AshenDB</span><span class="o">.</span><span class="n">delete_dbs</span><span class="p">([</span><span class="s2">&quot;test&quot;</span><span class="p">,</span> <span class="s2">&quot;test2&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </dd></dl>
@@ -390,23 +473,23 @@
       <footer>
         
         <div class="related-pages">
-          <a class="next-page" href="ashendb.collection.html">
+          <a class="next-page" href="ashendb.database.html">
               <div class="page-info">
                 <div class="context">
                   <span>Next</span>
                 </div>
-                <div class="title">ashendb.collection module</div>
+                <div class="title">ashendb.database module</div>
               </div>
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
             </a>
-          <a class="prev-page" href="index.html">
+          <a class="prev-page" href="ashendb.html">
               <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
               <div class="page-info">
                 <div class="context">
                   <span>Previous</span>
                 </div>
                 
-                <div class="title">Home</div>
+                <div class="title">ashendb package</div>
                 
               </div>
             </a>
@@ -445,10 +528,12 @@
 <li><a class="reference internal" href="#ashendb.client.AshenDB.base"><code class="docutils literal notranslate"><span class="pre">AshenDB.base</span></code></a></li>
 <li><a class="reference internal" href="#ashendb.client.AshenDB.get_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_db()</span></code></a></li>
 <li><a class="reference internal" href="#ashendb.client.AshenDB.get_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_dbs()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.iterate_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.iterate_dbs()</span></code></a></li>
 <li><a class="reference internal" href="#ashendb.client.AshenDB.create_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.create_db()</span></code></a></li>
 <li><a class="reference internal" href="#ashendb.client.AshenDB.create_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.create_dbs()</span></code></a></li>
-<li><a class="reference internal" href="#ashendb.client.AshenDB.get_and_delete_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_and_delete_db()</span></code></a></li>
-<li><a class="reference internal" href="#ashendb.client.AshenDB.get_and_delete_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.get_and_delete_dbs()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.iterate_create_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.iterate_create_dbs()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.del_db"><code class="docutils literal notranslate"><span class="pre">AshenDB.del_db()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.client.AshenDB.del_dbs"><code class="docutils literal notranslate"><span class="pre">AshenDB.del_dbs()</span></code></a></li>
 </ul>
 </li>
 </ul>

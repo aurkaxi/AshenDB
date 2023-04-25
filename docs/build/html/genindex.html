@@ -206,12 +206,15 @@
 </form>
 <div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
   <ul>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.client.html">ashendb.client module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.collection.html">ashendb.collection module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.database.html">ashendb.database module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.document.html">ashendb.document module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.exception.html">ashendb.exception module</a></li>
-<li class="toctree-l1"><a class="reference internal" href="ashendb.helper.html">ashendb.helper module</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="ashendb.html">ashendb package</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.client.html">ashendb.client module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.database.html">ashendb.database module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.collection.html">ashendb.collection module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.document.html">ashendb.document module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.helper.html">ashendb.helper module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ashendb.exception.html">ashendb.exception module</a></li>
+</ul>
+</li>
 </ul>
 
 </div>
@@ -256,6 +259,13 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="ashendb.exception.html#ashendb.exception.AlreadyExists">AlreadyExists</a>
 </li>
+        <li>
+    ashendb
+
+        <ul>
+          <li><a href="ashendb.html#module-ashendb">module</a>
+</li>
+        </ul></li>
         <li><a href="ashendb.client.html#ashendb.client.AshenDB">AshenDB (class in ashendb.client)</a>
 </li>
         <li>
@@ -272,6 +282,8 @@
           <li><a href="ashendb.collection.html#module-ashendb.collection">module</a>
 </li>
         </ul></li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     ashendb.database
 
@@ -279,8 +291,6 @@
           <li><a href="ashendb.database.html#module-ashendb.database">module</a>
 </li>
         </ul></li>
-    </ul></td>
-    <td style="width: 33%; vertical-align: top;"><ul>
         <li>
     ashendb.document
 
@@ -322,15 +332,17 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="ashendb.collection.html#ashendb.collection.Collection">Collection (class in ashendb.collection)</a>
 </li>
-        <li><a href="ashendb.database.html#ashendb.database.Database.create_collection">create_collection() (ashendb.database.Database method)</a>
+        <li><a href="ashendb.database.html#ashendb.database.Database.create_coll">create_coll() (ashendb.database.Database method)</a>
+</li>
+        <li><a href="ashendb.database.html#ashendb.database.Database.create_colls">create_colls() (ashendb.database.Database method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="ashendb.database.html#ashendb.database.Database.create_collections">create_collections() (ashendb.database.Database method)</a>
-</li>
         <li><a href="ashendb.client.html#ashendb.client.AshenDB.create_db">create_db() (ashendb.client.AshenDB class method)</a>
 </li>
         <li><a href="ashendb.client.html#ashendb.client.AshenDB.create_dbs">create_dbs() (ashendb.client.AshenDB class method)</a>
+</li>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.create_doc">create_doc() (ashendb.collection.Collection method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -342,8 +354,20 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="ashendb.database.html#ashendb.database.Database">Database (class in ashendb.database)</a>
 </li>
+        <li><a href="ashendb.database.html#ashendb.database.Database.del_coll">del_coll() (ashendb.database.Database method)</a>
+</li>
+        <li><a href="ashendb.database.html#ashendb.database.Database.del_colls">del_colls() (ashendb.database.Database method)</a>
+</li>
+        <li><a href="ashendb.client.html#ashendb.client.AshenDB.del_db">del_db() (ashendb.client.AshenDB class method)</a>
+</li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="ashendb.client.html#ashendb.client.AshenDB.del_dbs">del_dbs() (ashendb.client.AshenDB class method)</a>
+</li>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.del_doc">del_doc() (ashendb.collection.Collection method)</a>
+</li>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.del_docs">del_docs() (ashendb.collection.Collection method)</a>
+</li>
         <li><a href="ashendb.document.html#ashendb.document.Document">Document (class in ashendb.document)</a>
 </li>
     </ul></td>
@@ -354,27 +378,21 @@
   <h2>G</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="ashendb.database.html#ashendb.database.Database.get_and_delete_collection">get_and_delete_collection() (ashendb.database.Database method)</a>
+        <li><a href="ashendb.collection.html#ashendb.collection.gen_id">gen_id() (in module ashendb.collection)</a>
 </li>
-        <li><a href="ashendb.database.html#ashendb.database.Database.get_and_delete_collections">get_and_delete_collections() (ashendb.database.Database method)</a>
+        <li><a href="ashendb.database.html#ashendb.database.Database.get_coll">get_coll() (ashendb.database.Database method)</a>
 </li>
-        <li><a href="ashendb.client.html#ashendb.client.AshenDB.get_and_delete_db">get_and_delete_db() (ashendb.client.AshenDB class method)</a>
-</li>
-        <li><a href="ashendb.client.html#ashendb.client.AshenDB.get_and_delete_dbs">get_and_delete_dbs() (ashendb.client.AshenDB class method)</a>
-</li>
-        <li><a href="ashendb.database.html#ashendb.database.Database.get_collection">get_collection() (ashendb.database.Database method)</a>
+        <li><a href="ashendb.database.html#ashendb.database.Database.get_colls">get_colls() (ashendb.database.Database method)</a>
 </li>
     </ul></td>
     <td style="width: 33%; vertical-align: top;"><ul>
-        <li><a href="ashendb.database.html#ashendb.database.Database.get_collections">get_collections() (ashendb.database.Database method)</a>
-</li>
         <li><a href="ashendb.client.html#ashendb.client.AshenDB.get_db">get_db() (ashendb.client.AshenDB class method)</a>
 </li>
         <li><a href="ashendb.client.html#ashendb.client.AshenDB.get_dbs">get_dbs() (ashendb.client.AshenDB class method)</a>
 </li>
-        <li><a href="ashendb.collection.html#ashendb.collection.Collection.get_document">get_document() (ashendb.collection.Collection method)</a>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.get_doc">get_doc() (ashendb.collection.Collection method)</a>
 </li>
-        <li><a href="ashendb.collection.html#ashendb.collection.Collection.get_documents">get_documents() (ashendb.collection.Collection method)</a>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.get_docs">get_docs() (ashendb.collection.Collection method)</a>
 </li>
     </ul></td>
   </tr></table>
@@ -386,6 +404,18 @@
     <td style="width: 33%; vertical-align: top;"><ul>
         <li><a href="ashendb.exception.html#ashendb.exception.InvalidArgumentType">InvalidArgumentType</a>
 </li>
+        <li><a href="ashendb.database.html#ashendb.database.Database.iteeate_create_colls">iteeate_create_colls() (ashendb.database.Database method)</a>
+</li>
+        <li><a href="ashendb.database.html#ashendb.database.Database.iterate_colls">iterate_colls() (ashendb.database.Database method)</a>
+</li>
+    </ul></td>
+    <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="ashendb.client.html#ashendb.client.AshenDB.iterate_create_dbs">iterate_create_dbs() (ashendb.client.AshenDB class method)</a>
+</li>
+        <li><a href="ashendb.client.html#ashendb.client.AshenDB.iterate_dbs">iterate_dbs() (ashendb.client.AshenDB class method)</a>
+</li>
+        <li><a href="ashendb.collection.html#ashendb.collection.Collection.iterate_docs">iterate_docs() (ashendb.collection.Collection method)</a>
+</li>
     </ul></td>
   </tr></table>
 </section>
@@ -394,12 +424,16 @@
   <h2>M</h2>
   <table style="width: 100%" class="indextable genindextable"><tr>
     <td style="width: 33%; vertical-align: top;"><ul>
+        <li><a href="ashendb.html#ashendb.main">main() (in module ashendb)</a>
+</li>
         <li><a href="ashendb.helper.html#ashendb.helper.match_data">match_data() (in module ashendb.helper)</a>
 </li>
         <li>
     module
 
         <ul>
+          <li><a href="ashendb.html#module-ashendb">ashendb</a>
+</li>
           <li><a href="ashendb.client.html#module-ashendb.client">ashendb.client</a>
 </li>
           <li><a href="ashendb.collection.html#module-ashendb.collection">ashendb.collection</a>

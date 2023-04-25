@@ -24,6 +24,11 @@ class AshenDB(str):
 
         Raises:
             NotFound: If the database does not exist.
+
+        Example:
+            >>> db = await AshenDB.get_db("test")
+            >>> db
+            <Database: test>
         """
         for name in await aios.listdir(cls.base):
             if name == db_name:
@@ -31,52 +36,56 @@ class AshenDB(str):
         raise NotFound(f"Database '{db_name}' does not exist.")
 
     @classmethod
-    async def get_dbs(
-        cls, db_names: list[str] = None
-    ) -> Generator[Database, None, None]:
-        """Get multiple databases.
+    async def get_dbs(cls, db_names: list[str] = None) -> list[Database]:
+        """Get multiple databases from list of database names.
 
-        From a list of database names. If no list is provided or the list is empty, all databases are returned.
+        If no list is provided or the list is empty, all databases are returned.
 
         Args:
-            db_names: A list of database names.
+            db_names: The names of the databases.
 
         Raises:
-            NotFound: If a database does not exist.
             InvalidArgumentType: If the argument is not a list.
-
-        Yields:
-            Database: A database.
+            NotFound: If one of the databases does not exist.
 
         Example:
-            >>> async for db in AshenDB.get_dbs(["db1", "db2"]):
-            >>>     print(db.name)
-            db1
-            db2
+            >>> dbs = await AshenDB.get_dbs(["test", "test2"])
+            >>> dbs
+            [<Database: test>, <Database: test2>]
 
-            >>> async for db in AshenDB.get_dbs():
-            >>>     print(db.name)
-            db1
-            db2
-            db3
-            ...
-
-            >>> async for db in AshenDB.get_dbs([]):
-            >>>     print(db.name)
-            db1
-            db2
-            db3
-            ...
-
-            >>> dbs = [db async for db in AshenDB.get_dbs()]
-            >>> print(dbs)
-            [db1, db2, db3, ...]
-
-
-        Notes:
-            This is a generator. You must use a for loop to iterate through it. If you want to get a list, use list comprehension. See the last example.
+            >>> dbs = await AshenDB.get_dbs()
+            >>> dbs
+            [<Database: test>, <Database: test2>, <Database: test3>]
         """
+        final = []
+        if db_names is None or len(db_names) == 0:
+            for name in await aios.listdir(cls.base):
+                final.append(Database(cls.base + name + "/"))
+        elif isinstance(db_names, list) and len(db_names) > 0:
+            for name in db_names:
+                final.append(await cls.get_db(name))
+        else:
+            raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
 
+        return final
+
+    @classmethod
+    async def iterate_dbs(cls, db_names: list[str]) -> Generator[Database, None, None]:
+        """Iterate over multiple databases from list of database names.
+
+        Args:
+            db_names: The names of the databases.
+
+        Raises:
+            InvalidArgumentType: If the argument is not a list.
+            NotFound: If one of the databases does not exist.
+
+        Example:
+            >>> async for db in AshenDB.iterate_dbs(["test", "test2"]):
+            ...     print(db)
+            <Database: test>
+            <Database: test2>
+        """
         if db_names is None or len(db_names) == 0:
             for name in await aios.listdir(cls.base):
                 yield Database(cls.base + name + "/")
@@ -85,7 +94,6 @@ class AshenDB(str):
                 yield await cls.get_db(name)
         else:
             raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
-        return
 
     @classmethod
     async def create_db(cls, db_name: str) -> Database:
@@ -96,6 +104,11 @@ class AshenDB(str):
 
         Raises:
             AlreadyExists: If the database already exists.
+
+        Example:
+            >>> db = await AshenDB.create_db("test")
+            >>> db
+            <Database: test>
         """
         path = cls.base + db_name
         if await aios.path.exists(path):
@@ -105,17 +118,67 @@ class AshenDB(str):
             return Database(path + "/")
 
     @classmethod
-    async def create_dbs(cls, db_names: list):
+    async def create_dbs(cls, db_names: list[str]) -> list[Database]:
+        """Create multiple databases.
+
+        Args:
+            db_names: The names of the databases.
+
+        Raises:
+            AlreadyExists: If one of the databases already exists.
+            InvalidArgumentType: If the argument is not a list or Empty or No Argument was passed.
+
+        Example:
+            >>> dbs = await AshenDB.create_dbs(["test", "test2"])
+            >>> dbs
+            [<Database: test>, <Database: test2>]
         """
-        Create multiple databases.
+        final = []
+        if db_names is None or len(db_names) == 0 or not isinstance(db_names, list):
+            raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
+
+        for name in db_names:
+            final.append(await cls.create_one(name))
+
+        return final
+
+    @classmethod
+    async def iterate_create_dbs(
+        cls, db_names: list[str]
+    ) -> Generator[Database, None, None]:
+        """Iterate over multiple databases from list of database names.
+
+        Args:
+            db_names: The names of the databases.
+
+        Raises:
+            AlreadyExists: If one of the databases already exists.
+            InvalidArgumentType: If the argument is not a list or Empty or No Argument was passed.
+
+        Example:
+            >>> async for db in AshenDB.iterate_create_dbs(["test", "test2"]):
+            ...     print(db)
+            <Database: test>
+            <Database: test2>
         """
+        if db_names is None or len(db_names) == 0 or not isinstance(db_names, list):
+            raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
         for name in db_names:
             yield await cls.create_one(name)
 
     @classmethod
-    async def get_and_delete_db(cls, db_name: str):
-        """
-        Delete a single database.
+    async def del_db(cls, db_name: str) -> None:
+        """Delete a single database.
+
+        Args:
+            db_name: The name of the database.
+
+        Raises:
+            NotFound: If the database does not exist.
+
+        Example:
+            >>> await AshenDB.delete_db("test")
+
         """
         path = cls.base + db_name
         if await aios.path.exists(path):
@@ -125,14 +188,24 @@ class AshenDB(str):
             raise Exception(f"Database '{db_name}' does not exist.")
 
     @classmethod
-    async def get_and_delete_dbs(cls, db_names: list):
-        """
-        Delete multiple databases.
+    async def del_dbs(cls, db_names: list[str]) -> None:
+        """Delete multiple databases.
+
+        If no list is provided or the list is empty, all databases are deleted.
+
+        Args:
+            db_names: The names of the databases.
+
+        Raises:
+            NotFound: If one of the databases does not exist.
+
+        Example:
+            >>> await AshenDB.delete_dbs(["test", "test2"])
         """
         if db_names is None:
             for name in await aios.listdir(cls.base):
-                await cls.get_and_delete_one(name)
+                await cls.delete_db(name)
             return
         for name in db_names:
-            await cls.get_and_delete_one(name)
+            await cls.delete_db(name)
         return

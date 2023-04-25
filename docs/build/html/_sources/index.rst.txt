@@ -41,14 +41,9 @@ Manuals
 --------
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 3
 
-   ashendb.client
-   ashendb.collection
-   ashendb.database
-   ashendb.document
-   ashendb.exception
-   ashendb.helper
+   ashendb
 
 
 Indices and tables
