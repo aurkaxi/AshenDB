@@ -14,7 +14,7 @@ sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
 project = "AshenDB"
 copyright = "2023, Abdullah Al Muaz (@aurkaxi)"
 author = "Abdullah Al Muaz (@aurkaxi)"
-release = "0.0.1"
+release = "0.0.2"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
