@@ -25,4 +25,5 @@ from .client import AshenDB
 from .database import Database
 from .collection import Collection
 from .document import Document
-import ashendb.exception as AshenDBException
+from ashendb import helper as Helper
+from ashendb import exception as AshenDBException

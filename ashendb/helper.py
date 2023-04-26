@@ -87,28 +87,37 @@ async def match_data(data: dict, query: dict) -> bool:
         **projection_operators,
     }
 
+    all_matched = True
+
     for key, value in query.items():
         # If there is a dot in the key, it means that we have to go deeper
         if "." in key:
             key, subkey = key.split(".", 1)
-            # try:
-            return await match_data(data=data[key], query={subkey: value})
-            # except:
-            #     print("error")
-            #     continue
+            try:
+                result = await match_data(data=data[key], query={subkey: value})
+                all_matched = all_matched and result
+            except:
+                continue
         # If the key starts with $, it means that it is an operator
         elif key.startswith("$") and key in query_operators:
             # Check if function is async
             if asyncio.iscoroutinefunction(query_operators[key]):
                 # If it is async, we have to await it
-                return await query_operators[key](data, value)
+                result = await query_operators[key](data, value)
             else:
                 # If it is not async, we just call it
-                return query_operators[key](data, value)
+                result = query_operators[key](data, value)
+            # Update all_matched
+            all_matched = all_matched and result
         # If the value is a dict, it means that we have to go deeper
         elif isinstance(value, dict):
             try:
-                return await match_data(data[key], value)
+                result = await match_data(data[key], value)
             except:
-                continue
-        return data[key] == value
+                result = False
+            all_matched = all_matched and result
+        else:
+            result = data[key] == value
+            all_matched = all_matched and result
+
+    return all_matched

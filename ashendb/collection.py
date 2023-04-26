@@ -8,12 +8,6 @@ from .document import Document
 from .exception import *
 
 
-# for file in await aios.scandir(self.path):
-#     async with aiofiles.open(file.path, "r") as f:
-#         data = json.loads(await f.read())
-#         if await match_data(data, query):
-#             async with Document(file.path) as doc:
-#                 yield doc
 def gen_id() -> str:
     """Generate a random id.
 
@@ -27,7 +21,7 @@ class Collection:
     def __init__(self, path):
         self.path = path
 
-    async def get_doc(self, id: str or int = None, query: dict = None) -> Document:
+    async def get_doc(self, *, id: str or int = None, query: dict = None) -> Document:
         """Get a single document.
 
         You can pass either an id or a query. If both are passed then the id will be used.
@@ -50,13 +44,21 @@ class Collection:
             {"name": "test"}
         """
         if id:
-            return Document(f"{self.path}/{id}.json")
+            # check if the "{self.path}/{id}.json" file exists
+            path = f"{self.path}/{id}.json"
+            if not await aios.path.exists(path):
+                raise NotFound("No document found")
+            doc = Document(path)
+            await doc.__ainit__()
+            return doc
         elif query:
             for file in await aios.scandir(self.path):
                 async with aiofiles.open(file.path, "r") as f:
                     data = json.loads(await f.read())
                     if await match_data(data, query):
-                        return Document(file.path)
+                        doc = Document(file.path)
+                        await doc.__ainit__()
+                        return doc
             raise NotFound("No document found")
         else:
             raise ValueError("Either id or query must be provided")
@@ -88,15 +90,17 @@ class Collection:
         final = []
         if ids:
             for id in ids:
-                final.append(await self.get_doc(id))
+                final.append(await self.get_doc(id=id))
             return final
         elif query:
             for file in await aios.scandir(self.path):
                 async with aiofiles.open(file.path, "r") as f:
                     data = json.loads(await f.read())
                     if await match_data(data, query):
-                        final.append(Document(file.path))
-            if len(final) == 0:
+                        doc = Document(file.path)
+                        await doc.__ainit__()
+                        final.append(doc)
+            if len(final) == 0 or len(final[0]) == 0:
                 raise NotFound("No documents found")
             return final
         else:
@@ -132,13 +136,15 @@ class Collection:
         """
         if ids:
             for id in ids:
-                yield await self.get_doc(id)
+                yield await self.get_doc(id=id)
         elif query:
             for file in await aios.scandir(self.path):
                 async with aiofiles.open(file.path, "r") as f:
                     data = json.loads(await f.read())
                     if await match_data(data, query):
-                        yield Document(file.path)
+                        doc = Document(file.path)
+                        await doc.__ainit__()
+                        yield doc
         else:
             raise ValueError("Either ids or query must be provided")
 
