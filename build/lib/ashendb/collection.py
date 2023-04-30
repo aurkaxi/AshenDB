@@ -258,9 +258,6 @@ class Collection:
 
         You can pass either an id or a query. If both are passed then the id will be tried first, if it fails then the query will be used.
 
-        Note:
-            Only "$set" is supported for now. More operators will be added in the future.
-
         Args:
             id: The id of the document.
             query: A query to match the document.
@@ -274,7 +271,7 @@ class Collection:
             >>> old_doc = await coll.update_doc(query={"name": "test"}}
             >>> old_doc
             {"name": "test"}
-            >>> await coll.update_doc(query={"name": "test"}, data={"$set":{"name": "test2"})}
+            >>> await coll.update_doc(query={"name": "test"}, data={"name": "test2"})
             >>> new_doc = await coll.get_doc(query={"name": "test2"})
             >>> new_doc
             {"name": "test2"}

@@ -125,17 +125,70 @@ async def match_data(data: dict, query: dict) -> bool:
 
 
 async def update_data(document: Document, update: dict) -> Document:
+    # Example dict:
+    # {
+    #     "_id": 1234567890,
+    #     "name": "Ashen",
+    #     "age": 18,
+    #     "friends": ["John", "Jane", "Jack"],
+    #     "address": {
+    #         "street": {
+    #            "housing": 123
+    #         },
+    #         "number": 123,
+    #         "city": "New York",
+    #         "country": "USA"
+    #     }
+    # }
+    # Example updates:
+    # Update Name : {"$set": {"name": "Ashen Parikh"}}
+    # Update Age : {"$inc": {"age": 1}}
+    # Update Friends : {"$push": {"friends": ["Joe", "Jill"]}}
+    # Update Address : {"$set": {"address.street": "Wall Street"}}
+    # Update All: {"$set": {"name": "Ashen Parikh"}, "$inc": {"age": 1}, "$push": {"friends": ["Joe", "Jill"]}, "$set": {"address.street": "Wall Street"}}
+
+    # Algorithm:
+    # 1. Check if key starts with $ which means that it is an operator
+    # 2. If it is an operator, check if it is a valid operator and proceed accordingly
+    # 2.1 If it is a valid operator, get the value which is a dict and proceed accordingly
+    # 2.2 The key from the value is our new key and the value from the value is our new value
+    # 2.3 If the new key has a dot in it, it means that we have to go deeper
+    # 2.4 If the new key does not have a dot in it, it means that we have to update the value
+    # 3. If it is not an operator, check if it is a valid key and proceed accordingly
+    # 4. If it is not a valid key, raise an error
+
     update_operators = {
         "$set": lambda x, y: y,
     }
+
+    # document = {
+    #     "name": "Ashen",
+    #     "address": {
+    #         "street": {
+    #            "housing": 123
+    #         }
+    #     }
+    # }
     for key, value in update.items():
+        # key: $set
+        # or value: {"name": "Ashen Parikh"}
+        # value: {"address.street.housing": "234"}
         for new_key, new_value in value.items():
+            # new_key: name
+            # or new_key: address.street.housing
+
+            # new_value: Ashen Parikh
+            # or new_value: 234
             keys = new_key.split(".")
             if "." not in new_key:
                 new_document = document
             else:
+                # new_key: address.street.housing
+                # new_value: 234
+                # keys: ["address", "street", "housing"]
                 new_document = document
                 for x in keys[:-1]:
+                    # key: address
                     new_document = document[x]
 
             update_function = update_operators[key]
