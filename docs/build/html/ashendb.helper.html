@@ -6,7 +6,7 @@
 <link rel="index" title="Index" href="genindex.html" /><link rel="search" title="Search" href="search.html" /><link rel="next" title="ashendb.exception module" href="ashendb.exception.html" /><link rel="prev" title="ashendb.document module" href="ashendb.document.html" />
 
     <!-- Generated with Sphinx 6.1.3 and Furo 2023.03.27 -->
-        <title>ashendb.helper module - AshenDB 0.0.2 documentation</title>
+        <title>ashendb.helper module - AshenDB 0.0.3 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo.css?digest=fad236701ea90a88636c2a8c73b44ae642ed2a53" />
     <link rel="stylesheet" type="text/css" href="_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
@@ -174,7 +174,7 @@
       </label>
     </div>
     <div class="header-center">
-      <a href="index.html"><div class="brand">AshenDB 0.0.2 documentation</div></a>
+      <a href="index.html"><div class="brand">AshenDB 0.0.3 documentation</div></a>
     </div>
     <div class="header-right">
       <div class="theme-toggle-container theme-toggle-header">
@@ -255,18 +255,135 @@
 <span id="ashendb-helper-module"></span><h1>ashendb.helper module<a class="headerlink" href="#module-ashendb.helper" title="Permalink to this heading">#</a></h1>
 <dl class="py function">
 <dt class="sig sig-object py" id="ashendb.helper.match_data">
-<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.helper.</span></span><span class="sig-name descname"><span class="pre">match_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ashendb.helper.match_data" title="Permalink to this definition">#</a></dt>
-<dd><dl class="field-list simple">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.helper.</span></span><span class="sig-name descname"><span class="pre">match_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><span class="pre">Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">query</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#ashendb.helper.match_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Match a document with a query.</p>
+<dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>data</strong> (<em>dict</em>) – </p></li>
-<li><p><strong>query</strong> (<em>dict</em>) – </p></li>
+<li><p><strong>data</strong> (<a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><em>Document</em></a>) – The document to match.</p></li>
+<li><p><strong>query</strong> (<em>dict</em>) – The query to match with.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>bool</p>
 </dd>
 </dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">match_data</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ashen&quot;</span><span class="p">},</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Ashen&quot;</span><span class="p">})</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the operators might not work. Please report as bug.</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+<col style="width: 16.7%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Comparison</p></th>
+<th class="head"><p>Logical</p></th>
+<th class="head"><p>Element</p></th>
+<th class="head"><p>Evaluation</p></th>
+<th class="head"><p>Geospatial</p></th>
+<th class="head"><p>Array</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>$eq</p></td>
+<td><p>$and</p></td>
+<td><p>$exists</p></td>
+<td><p>$mod</p></td>
+<td><p>$geoIntersects</p></td>
+<td><p>$all</p></td>
+</tr>
+<tr class="row-odd"><td><p>$ne</p></td>
+<td><p>$or</p></td>
+<td><p>$type</p></td>
+<td><p>$regex</p></td>
+<td><p>$geoWithin</p></td>
+<td><p>$elemMatch</p></td>
+</tr>
+<tr class="row-even"><td><p>$gt</p></td>
+<td><p>$not</p></td>
+<td></td>
+<td><p>$text</p></td>
+<td><p>$near</p></td>
+<td><p>$slice</p></td>
+</tr>
+<tr class="row-odd"><td><p>$gte</p></td>
+<td><p>$nor</p></td>
+<td></td>
+<td><p>$where</p></td>
+<td><p>$nearSphere</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>$lt</p></td>
+<td><p>$elemMatch</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>$lte</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>$in</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>$nin</p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="ashendb.helper.update_data">
+<em class="property"><span class="k"><span class="pre">async</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ashendb.helper.</span></span><span class="sig-name descname"><span class="pre">update_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">document</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><span class="pre">Document</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">update</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><span class="pre">Document</span></a></span></span><a class="headerlink" href="#ashendb.helper.update_data" title="Permalink to this definition">#</a></dt>
+<dd><p>Update a document with the given update query.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>document</strong> (<a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><em>Document</em></a>) – The document to update.</p></li>
+<li><p><strong>update</strong> (<em>dict</em>) – The update query.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p><a class="reference internal" href="ashendb.document.html#ashendb.document.Document" title="ashendb.document.Document"><em>Document</em></a></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">document</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">20</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">update</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;$set&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">21</span><span class="p">}}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">await</span> <span class="n">update_data</span><span class="p">(</span><span class="n">document</span><span class="p">,</span> <span class="n">update</span><span class="p">)</span>
+<span class="go">{&quot;name&quot;: &quot;John&quot;, &quot;age&quot;: 21}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>All the operators might not work. Please report as bug.</p>
+</div>
 </dd></dl>
 
 </section>
@@ -328,6 +445,7 @@
             <ul>
 <li><a class="reference internal" href="#">ashendb.helper module</a><ul>
 <li><a class="reference internal" href="#ashendb.helper.match_data"><code class="docutils literal notranslate"><span class="pre">match_data()</span></code></a></li>
+<li><a class="reference internal" href="#ashendb.helper.update_data"><code class="docutils literal notranslate"><span class="pre">update_data()</span></code></a></li>
 </ul>
 </li>
 </ul>

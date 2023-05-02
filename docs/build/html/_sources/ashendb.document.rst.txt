@@ -5,3 +5,4 @@ ashendb.document module
    :members:
    :undoc-members:
    :show-inheritance:
+   :exclude-members: update

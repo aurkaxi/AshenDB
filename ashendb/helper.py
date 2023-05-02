@@ -1,9 +1,83 @@
 from re import match
-import asyncio
+import asyncio, datetime
 from .document import Document
 
 
-async def match_data(data: dict, query: dict) -> bool:
+async def match_data(data: Document or dict, query: dict) -> bool:
+    """Match a document with a query.
+
+    Args:
+        data: The document to match.
+        query: The query to match with.
+
+    Example:
+        >>> await match_data({"name": "Ashen"}, {"name": "Ashen"})
+        True
+
+    Note:
+        All the operators might not work. Please report as bug.
+
+        .. list-table::
+            :header-rows: 1
+            :widths: 20 20 20 20 20 20
+
+            * - Comparison
+              - Logical
+              - Element
+              - Evaluation
+              - Geospatial
+              - Array
+            * - $eq
+              - $and
+              - $exists
+              - $mod
+              - $geoIntersects
+              - $all
+            * - $ne
+              - $or
+              - $type
+              - $regex
+              - $geoWithin
+              - $elemMatch
+            * - $gt
+              - $not
+              -
+              - $text
+              - $near
+              - $slice
+            * - $gte
+              - $nor
+              -
+              - $where
+              - $nearSphere
+              -
+            * - $lt
+              - $elemMatch
+              -
+              -
+              -
+              -
+            * - $lte
+              -
+              -
+              -
+              -
+              -
+            * - $in
+              -
+              -
+              -
+              -
+              -
+            * - $nin
+              -
+              -
+              -
+              -
+              -
+
+    """
+
     comparison_operators = {
         "$eq": lambda x, y: x == y,
         "$ne": lambda x, y: x != y,
@@ -71,12 +145,6 @@ async def match_data(data: dict, query: dict) -> bool:
         "$elemMatch": elemMatch_operator,
         "$size": lambda x, y: len(x) == y,
     }
-    projection_operators = {
-        "$": lambda x, y: x,
-        "$elemMatch": lambda x, y: x,
-        "$meta": lambda x, y: x,
-        "$slice": lambda x, y: x,
-    }
 
     query_operators = {
         **comparison_operators,
@@ -85,7 +153,6 @@ async def match_data(data: dict, query: dict) -> bool:
         **evalutation_operators,
         **geospatial_operators,
         **array_operators,
-        **projection_operators,
     }
 
     all_matched = True
@@ -124,9 +191,90 @@ async def match_data(data: dict, query: dict) -> bool:
     return all_matched
 
 
-async def update_data(document: Document, update: dict) -> Document:
-    update_operators = {
+async def update_data(document: Document or dict, update: dict) -> Document:
+    """
+    Update a document with the given update query.
+
+    Args:
+        document (Document): The document to update.
+        update (dict): The update query.
+
+    Example:
+        >>> document = {"name": "John", "age": 20}
+        >>> update = {"$set": {"age": 21}}
+        >>> await update_data(document, update)
+        {"name": "John", "age": 21}
+
+    Note:
+        All the operators might not work. Please report as bug.
+
+        .. list-table::
+            :widths: 25 25 50
+            :header-rows: 1
+
+            * - Field Operators
+              - Array Operators
+              - Modification Operators
+            * - $currentDate
+                - $
+                - $each
+            * - $inc
+                - $addToSet
+                - $position
+            * - $min
+                - $pop
+                - $slice
+            * - $max
+                - $pull
+                - $sort
+            * - $mul
+                - $push
+                -
+            * - $rename
+                - $pullAll
+                -
+            * - $set
+                -
+                -
+            * - $setOnInsert
+                -
+                -
+            * - $unset
+                -
+                -
+    """
+    field_operators = {
+        "$currentDate": lambda x, y: datetime.datetime.utcnow(),
+        "$inc": lambda x, y: x + y,
+        "$min": lambda x, y: min(x, y),
+        "$max": lambda x, y: max(x, y),
+        "$mul": lambda x, y: x * y,
+        "$rename": lambda x, y: y,
         "$set": lambda x, y: y,
+        "$setOnInsert": lambda x, y: y,
+        "$unset": lambda x, y: None,
+    }
+
+    array_operators = {
+        "$": lambda x, y: y,
+        "$addToSet": lambda x, y: y,
+        "$pop": lambda x, y: y,
+        "$pull": lambda x, y: y,
+        "$push": lambda x, y: y,
+        "$pullAll": lambda x, y: y,
+    }
+
+    modification_operators = {
+        "$each": lambda x, y: y,
+        "$position": lambda x, y: y,
+        "$slice": lambda x, y: y,
+        "$sort": lambda x, y: y,
+    }
+
+    update_operators = {
+        **field_operators,
+        **array_operators,
+        **modification_operators,
     }
     for key, value in update.items():
         for new_key, new_value in value.items():
