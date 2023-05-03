@@ -221,24 +221,24 @@ async def update_data(document: Document or dict, update: dict) -> Document:
               - $
               - $each
             * - $inc ✔
-              - $addToSet
+              - $addToSet ✔
               - $position
             * - $min ✔
-              - $pop
+              - $pop ✔
               - $slice
             * - $max ✔
-              - $pull
+              - $pull ✔
               - $sort
             * - $mul ✔
-              - $push
+              - $push ✔
               -
-            * - $rename
-              - $pullAll
+            * - $rename ✔
+              - $pullAll ✔
               -
-            * - $set
+            * - $set ✔
               -
               -
-            * - $setOnInser
+            * - $setOnInsert ✔
               -
               -
             * - $unset ✔
