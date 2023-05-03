@@ -259,8 +259,7 @@ class Collection:
         You can pass either an id or a query. If both are passed then the id will be tried first, if it fails then the query will be used.
 
         Note:
-            Only "$set" is supported for now. More operators will be added in the future.
-
+            Not all update operators are supported. See helper_module for more info.
         Args:
             id: The id of the document.
             query: A query to match the document.
