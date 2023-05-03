@@ -1,5 +1,5 @@
 from re import match
-import asyncio, datetime
+import asyncio, time
 
 
 from .document import Document
@@ -217,19 +217,19 @@ async def update_data(document: Document or dict, update: dict) -> Document:
             * - Field Operators
               - Array Operators
               - Modification Operators
-            * - $currentDate
+            * - $currentDate ✔
               - $
               - $each
             * - $inc ✔
               - $addToSet
               - $position
-            * - $min
+            * - $min ✔
               - $pop
               - $slice
-            * - $max
+            * - $max ✔
               - $pull
               - $sort
-            * - $mul
+            * - $mul ✔
               - $push
               -
             * - $rename
@@ -245,29 +245,46 @@ async def update_data(document: Document or dict, update: dict) -> Document:
               -
               -
     """
-
-    def inc_operator(parent_key, key, value):
-        parent_key[key] = parent_key[key] + value
-        return parent_key
-
     field_operators = {
-        "$currentDate": lambda x, y: datetime.datetime.utcnow(),
+        "$currentDate": lambda parent_key, key, value: parent_key.__setitem__(
+            key, int(time.time())
+        )
+        or parent_key,
         "$inc": lambda parent_key, key, value: parent_key.__setitem__(
             key, parent_key[key] + value
         )
         or parent_key,
-        "$min": lambda x, y: min(x, y),
-        "$max": lambda x, y: max(x, y),
-        "$mul": lambda x, y: x * y,
-        "$rename": lambda x, y: y,
-        "$set": lambda x, y: y,
-        "$setOnInsert": lambda x, y: y,
+        "$min": lambda parent_key, key, value: parent_key.__setitem__(
+            key, min(value, parent_key.get(key, float("inf")))
+        )
+        or parent_key,
+        "$max": lambda parent_key, key, value: parent_key.__setitem__(
+            key, max(value, parent_key.get(key, float("-inf")))
+        )
+        or parent_key,
+        "$mul": lambda parent_key, key, value: parent_key.__setitem__(
+            key, parent_key[key] * value
+        )
+        or parent_key,
+        "$rename": lambda parent_key, key, value: parent_key.__setitem__(
+            value, parent_key.pop(key)
+        )
+        or parent_key,
+        "$set": lambda parent_key, key, value: parent_key.__setitem__(key, value)
+        or parent_key,
+        # setOnInsert inserts the value only if that didn't exist before
+        "$setOnInsert": lambda parent_key, key, value: parent_key.__setitem__(
+            key, value
+        )
+        if key not in parent_key
+        else parent_key,
         "$unset": lambda parent_key, key, value: parent_key.__delitem__(key)
         if key in parent_key
         else None,
     }
     array_operators = {
-        "$": lambda x, y: y,
+        # "$" Acts as a placeholder to update the first element that matches the query condition.
+        "$" "$": lambda x, y: y,
         "$addToSet": lambda x, y: y,
         "$pop": lambda x, y: y,
         "$pull": lambda x, y: y,
