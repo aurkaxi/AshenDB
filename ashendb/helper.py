@@ -284,12 +284,45 @@ async def update_data(document: Document or dict, update: dict) -> Document:
     }
     array_operators = {
         # "$" Acts as a placeholder to update the first element that matches the query condition.
-        "$" "$": lambda x, y: y,
-        "$addToSet": lambda x, y: y,
-        "$pop": lambda x, y: y,
-        "$pull": lambda x, y: y,
-        "$push": lambda x, y: y,
-        "$pullAll": lambda x, y: y,
+        "$": lambda parent_key, key, query, update: "THIS IS NOT IMPLEMENTED YET",
+        "$[]": lambda parent_key, key, query, update: "THIS IS NOT IMPLEMENTED YET",
+        "$[<identifier>]": lambda parent_key, key, query, update: "THIS IS NOT IMPLEMENTED YET",
+        "$addToSet": lambda parent_key, key, value: parent_key.__setitem__(
+            key, parent_key[key] + [value]
+        )
+        if value not in parent_key[key]
+        else parent_key,
+        "$pop": lambda parent_key, key, value: parent_key.__setitem__(
+            key, parent_key[key][:-1]
+        )
+        if value == -1
+        else parent_key.__setitem__(key, parent_key[key][1:])
+        if value == 1
+        else parent_key,
+        "$pull": lambda parent_key, key, value: parent_key.__setitem__(
+            key, [item for item in parent_key[key] if item != value]
+        )
+        if isinstance(value, dict)
+        else parent_key.__setitem__(
+            key, [item for item in parent_key[key] if item not in value]
+        )
+        if isinstance(value, list)
+        else parent_key.__setitem__(
+            key, [item for item in parent_key[key] if item != value]
+        )
+        if isinstance(value, str)
+        else parent_key,
+        "$push": lambda parent_key, key, value: parent_key.__setitem__(
+            key,
+            parent_key.get(key, []) + value,
+        )
+        if parent_key.get(key)
+        else parent_key,
+        "$pullAll": lambda parent_key, key, value: parent_key.__setitem__(
+            key, [item for item in parent_key[key] if item not in value]
+        )
+        if isinstance(value, list)
+        else parent_key,
     }
 
     modification_operators = {
