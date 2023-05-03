@@ -1,5 +1,7 @@
 from re import match
 import asyncio, datetime
+
+
 from .document import Document
 
 
@@ -209,52 +211,61 @@ async def update_data(document: Document or dict, update: dict) -> Document:
         All the operators might not work. Please report as bug.
 
         .. list-table::
-            :widths: 25 25 50
             :header-rows: 1
+            :widths: 25 25 25
 
             * - Field Operators
               - Array Operators
               - Modification Operators
             * - $currentDate
-                - $
-                - $each
-            * - $inc
-                - $addToSet
-                - $position
+              - $
+              - $each
+            * - $inc ✔
+              - $addToSet
+              - $position
             * - $min
-                - $pop
-                - $slice
+              - $pop
+              - $slice
             * - $max
-                - $pull
-                - $sort
+              - $pull
+              - $sort
             * - $mul
-                - $push
-                -
+              - $push
+              -
             * - $rename
-                - $pullAll
-                -
+              - $pullAll
+              -
             * - $set
-                -
-                -
-            * - $setOnInsert
-                -
-                -
-            * - $unset
-                -
-                -
+              -
+              -
+            * - $setOnInser
+              -
+              -
+            * - $unset ✔
+              -
+              -
     """
+
+    def inc_operator(parent_key, key, value):
+        parent_key[key] = parent_key[key] + value
+        return parent_key
+
     field_operators = {
         "$currentDate": lambda x, y: datetime.datetime.utcnow(),
-        "$inc": lambda x, y: x + y,
+        "$inc": lambda parent_key, key, value: parent_key.__setitem__(
+            key, parent_key[key] + value
+        )
+        or parent_key,
         "$min": lambda x, y: min(x, y),
         "$max": lambda x, y: max(x, y),
         "$mul": lambda x, y: x * y,
         "$rename": lambda x, y: y,
         "$set": lambda x, y: y,
         "$setOnInsert": lambda x, y: y,
-        "$unset": lambda x, y: None,
+        "$unset": lambda parent_key, key, value: parent_key.__delitem__(key)
+        if key in parent_key
+        else None,
     }
-
     array_operators = {
         "$": lambda x, y: y,
         "$addToSet": lambda x, y: y,
@@ -276,21 +287,16 @@ async def update_data(document: Document or dict, update: dict) -> Document:
         **array_operators,
         **modification_operators,
     }
-    for key, value in update.items():
-        for new_key, new_value in value.items():
-            keys = new_key.split(".")
-            if "." not in new_key:
-                new_document = document
-            else:
-                new_document = document
-                for x in keys[:-1]:
-                    new_document = document[x]
 
-            update_function = update_operators[key]
-            updated_document = {keys[-1]: update_function(new_document, new_value)}
-            for i in reversed(keys[:-1]):
-                updated_document = {i: updated_document}
+    for operator, data in update.items():
+        for key, value in data.items():
+            keys = key.split(".")
+            temp = document
+            for key in keys[:-1]:
+                temp = temp.setdefault(key, {})
 
-            await document.update(updated_document)
+            if operator in update_operators:
+                update_operators[operator](temp, keys[-1], value)
 
+    await document.save()
     return document

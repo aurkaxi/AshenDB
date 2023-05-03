@@ -29,3 +29,13 @@ class Document(dict):
             contents = json.dumps(self)
             await f.write(contents)
         return self
+
+    async def save(self):
+        """Save changes made as dict
+
+        Returns:
+            Document: self
+        """
+        async with aiofiles.open(self.filepath, mode="w") as f:
+            contents = json.dumps(self)
+            await f.write(contents)

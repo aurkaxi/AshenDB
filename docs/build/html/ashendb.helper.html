@@ -19,6 +19,8 @@
   body {
     --color-code-background: #f8f8f8;
   --color-code-foreground: black;
+  --font-stack: FiraCode Nerd Font;
+  --font-stack--monospace: FiraCode Nerd Font;
   
   }
   @media not print {
@@ -383,6 +385,59 @@
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>All the operators might not work. Please report as bug.</p>
+<div class="table-wrapper colwidths-given docutils container">
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+<col style="width: 33.3%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Field Operators</p></th>
+<th class="head"><p>Array Operators</p></th>
+<th class="head"><p>Modification Operators</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>$currentDate</p></td>
+<td><p>$</p></td>
+<td><p>$each</p></td>
+</tr>
+<tr class="row-odd"><td><p>$inc ✔</p></td>
+<td><p>$addToSet</p></td>
+<td><p>$position</p></td>
+</tr>
+<tr class="row-even"><td><p>$min</p></td>
+<td><p>$pop</p></td>
+<td><p>$slice</p></td>
+</tr>
+<tr class="row-odd"><td><p>$max</p></td>
+<td><p>$pull</p></td>
+<td><p>$sort</p></td>
+</tr>
+<tr class="row-even"><td><p>$mul</p></td>
+<td><p>$push</p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>$rename</p></td>
+<td><p>$pullAll</p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>$set</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p>$setOnInser</p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p>$unset</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 </dd></dl>
 

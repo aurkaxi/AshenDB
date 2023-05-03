@@ -1,9 +1,85 @@
 from re import match
-import asyncio
+import asyncio, datetime
+
+
 from .document import Document
 
 
-async def match_data(data: dict, query: dict) -> bool:
+async def match_data(data: Document or dict, query: dict) -> bool:
+    """Match a document with a query.
+
+    Args:
+        data: The document to match.
+        query: The query to match with.
+
+    Example:
+        >>> await match_data({"name": "Ashen"}, {"name": "Ashen"})
+        True
+
+    Note:
+        All the operators might not work. Please report as bug.
+
+        .. list-table::
+            :header-rows: 1
+            :widths: 20 20 20 20 20 20
+
+            * - Comparison
+              - Logical
+              - Element
+              - Evaluation
+              - Geospatial
+              - Array
+            * - $eq
+              - $and
+              - $exists
+              - $mod
+              - $geoIntersects
+              - $all
+            * - $ne
+              - $or
+              - $type
+              - $regex
+              - $geoWithin
+              - $elemMatch
+            * - $gt
+              - $not
+              -
+              - $text
+              - $near
+              - $slice
+            * - $gte
+              - $nor
+              -
+              - $where
+              - $nearSphere
+              -
+            * - $lt
+              - $elemMatch
+              -
+              -
+              -
+              -
+            * - $lte
+              -
+              -
+              -
+              -
+              -
+            * - $in
+              -
+              -
+              -
+              -
+              -
+            * - $nin
+              -
+              -
+              -
+              -
+              -
+
+    """
+
     comparison_operators = {
         "$eq": lambda x, y: x == y,
         "$ne": lambda x, y: x != y,
@@ -71,12 +147,6 @@ async def match_data(data: dict, query: dict) -> bool:
         "$elemMatch": elemMatch_operator,
         "$size": lambda x, y: len(x) == y,
     }
-    projection_operators = {
-        "$": lambda x, y: x,
-        "$elemMatch": lambda x, y: x,
-        "$meta": lambda x, y: x,
-        "$slice": lambda x, y: x,
-    }
 
     query_operators = {
         **comparison_operators,
@@ -85,7 +155,6 @@ async def match_data(data: dict, query: dict) -> bool:
         **evalutation_operators,
         **geospatial_operators,
         **array_operators,
-        **projection_operators,
     }
 
     all_matched = True
@@ -124,78 +193,107 @@ async def match_data(data: dict, query: dict) -> bool:
     return all_matched
 
 
-async def update_data(document: Document, update: dict) -> Document:
-    # Example dict:
-    # {
-    #     "_id": 1234567890,
-    #     "name": "Ashen",
-    #     "age": 18,
-    #     "friends": ["John", "Jane", "Jack"],
-    #     "address": {
-    #         "street": {
-    #            "housing": 123
-    #         },
-    #         "number": 123,
-    #         "city": "New York",
-    #         "country": "USA"
-    #     }
-    # }
-    # Example updates:
-    # Update Name : {"$set": {"name": "Ashen Parikh"}}
-    # Update Age : {"$inc": {"age": 1}}
-    # Update Friends : {"$push": {"friends": ["Joe", "Jill"]}}
-    # Update Address : {"$set": {"address.street": "Wall Street"}}
-    # Update All: {"$set": {"name": "Ashen Parikh"}, "$inc": {"age": 1}, "$push": {"friends": ["Joe", "Jill"]}, "$set": {"address.street": "Wall Street"}}
+async def update_data(document: Document or dict, update: dict) -> Document:
+    """
+    Update a document with the given update query.
 
-    # Algorithm:
-    # 1. Check if key starts with $ which means that it is an operator
-    # 2. If it is an operator, check if it is a valid operator and proceed accordingly
-    # 2.1 If it is a valid operator, get the value which is a dict and proceed accordingly
-    # 2.2 The key from the value is our new key and the value from the value is our new value
-    # 2.3 If the new key has a dot in it, it means that we have to go deeper
-    # 2.4 If the new key does not have a dot in it, it means that we have to update the value
-    # 3. If it is not an operator, check if it is a valid key and proceed accordingly
-    # 4. If it is not a valid key, raise an error
+    Args:
+        document (Document): The document to update.
+        update (dict): The update query.
 
-    update_operators = {
+    Example:
+        >>> document = {"name": "John", "age": 20}
+        >>> update = {"$set": {"age": 21}}
+        >>> await update_data(document, update)
+        {"name": "John", "age": 21}
+
+    Note:
+        All the operators might not work. Please report as bug.
+
+        .. list-table::
+            :widths: 25 25 50
+            :header-rows: 1
+
+            * - Field Operators
+              - Array Operators
+              - Modification Operators
+            * - $currentDate
+                - $
+                - $each
+            * - $inc
+                - $addToSet
+                - $position
+            * - $min
+                - $pop
+                - $slice
+            * - $max
+                - $pull
+                - $sort
+            * - $mul
+                - $push
+                -
+            * - $rename
+                - $pullAll
+                -
+            * - $set
+                -
+                -
+            * - $setOnInsert
+                -
+                -
+            * - $unset
+                -
+                -
+    """
+
+    def inc_operator(parent_key, key, value):
+        parent_key[key] = parent_key[key] + value
+        return parent_key
+
+    field_operators = {
+        "$currentDate": lambda x, y: datetime.datetime.utcnow(),
+        "$inc": inc_operator,
+        "$min": lambda x, y: min(x, y),
+        "$max": lambda x, y: max(x, y),
+        "$mul": lambda x, y: x * y,
+        "$rename": lambda x, y: y,
         "$set": lambda x, y: y,
+        "$setOnInsert": lambda x, y: y,
+        "$unset": lambda parent_key, key, value: parent_key.__delitem__(key)
+        if key in parent_key
+        else None,
+    }
+    array_operators = {
+        "$": lambda x, y: y,
+        "$addToSet": lambda x, y: y,
+        "$pop": lambda x, y: y,
+        "$pull": lambda x, y: y,
+        "$push": lambda x, y: y,
+        "$pullAll": lambda x, y: y,
     }
 
-    # document = {
-    #     "name": "Ashen",
-    #     "address": {
-    #         "street": {
-    #            "housing": 123
-    #         }
-    #     }
-    # }
-    for key, value in update.items():
-        # key: $set
-        # or value: {"name": "Ashen Parikh"}
-        # value: {"address.street.housing": "234"}
-        for new_key, new_value in value.items():
-            # new_key: name
-            # or new_key: address.street.housing
+    modification_operators = {
+        "$each": lambda x, y: y,
+        "$position": lambda x, y: y,
+        "$slice": lambda x, y: y,
+        "$sort": lambda x, y: y,
+    }
 
-            # new_value: Ashen Parikh
-            # or new_value: 234
-            keys = new_key.split(".")
-            if "." not in new_key:
-                new_document = document
-            else:
-                # new_key: address.street.housing
-                # new_value: 234
-                # keys: ["address", "street", "housing"]
-                new_document = document
-                for x in keys[:-1]:
-                    # key: address
-                    new_document = document[x]
+    update_operators = {
+        **field_operators,
+        **array_operators,
+        **modification_operators,
+    }
 
-            update_function = update_operators[key]
-            updated_document = {keys[-1]: update_function(new_document, new_value)}
-            for i in reversed(keys[:-1]):
-                updated_document = {i: updated_document}
+    for operator, data in update.items():
+        for key, value in data.items():
+            keys = key.split(".")
+            temp = document
+            for key in keys[:-1]:
+                temp = temp.setdefault(key, {})
 
-            await document.update(updated_document)
+            if operator in update_operators:
+                update_operators[operator](temp, keys[-1], value)
 
+    await document.save()
     return document

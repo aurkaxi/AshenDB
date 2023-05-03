@@ -20,11 +20,3 @@ Helper modules
 
    ashendb.helper
    ashendb.exception
-
-Module contents
----------------
-
-.. automodule:: ashendb
-   :members:
-   :undoc-members:
-   :show-inheritance:

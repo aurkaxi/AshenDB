@@ -14,7 +14,7 @@ sys.path.insert(0, pathlib.Path(__file__).parents[2].resolve().as_posix())
 project = "AshenDB"
 copyright = "2023, Abdullah Al Muaz (@aurkaxi)"
 author = "Abdullah Al Muaz (@aurkaxi)"
-release = "0.0.3"
+release = "0.0.4"
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
@@ -77,6 +77,10 @@ html_theme_options = {
         "color-card-border": "#333437",
         "color-card-background": "#6d7c99",
         "color-card-marginal-background": "#405256",
+    },
+    "light_css_variables": {
+        "font-stack": "FiraCode Nerd Font",
+        "font-stack--monospace": "FiraCode Nerd Font",
     },
 }
 pygments_dark_style = "dracula"
