@@ -179,7 +179,7 @@ class Collection:
             await f.write(json.dumps(data))
         return Document(f"{self.path}/{id}.json")
 
-    async def create_doc(self, datas: list[dict]) -> list[Document]:
+    async def create_docs(self, datas: list[dict]) -> list[Document]:
         """Create multiple documents.
 
         Args:
