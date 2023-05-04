@@ -1,4 +1,3 @@
-import aiofiles
 import aiofiles.os as aios
 from typing import Generator
 
@@ -7,7 +6,7 @@ from .exception import *
 
 
 # Client Class
-class AshenDB(str):
+class AshenDB:
     """
     Entry point for AshenDB. This class is used to create, get, and delete databases.
 

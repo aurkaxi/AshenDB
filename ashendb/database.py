@@ -7,7 +7,7 @@ from .exception import *
 
 
 # Database Class
-class Database(str):
+class Database:
     def __init__(self, db_path: str):
         super().__init__()
         self.path = db_path
