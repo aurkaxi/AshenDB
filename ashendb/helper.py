@@ -341,15 +341,16 @@ async def update_data(document: Document or dict, update: dict) -> Document:
     }
 
     for operator, data in update.items():
-        # if update is {"$set": {"name": "John"}}
-        # then operator is "$set" and data is {"name": "John"}
         for key, value in data.items():
-            # if data is {"name": "John"}
-            # then key is "name" and value is "John"
-            keys = key.split(".")
             temp = document
+            keys = key.split(".")
             for key in keys[:-1]:
-                temp = temp.setdefault(key, {})
+                if "[" in key:
+                    key, index = key.split("[")
+                    index = int(index[:-1])
+                    temp = temp[key][index]
+                else:
+                    temp = temp.setdefault(key, {})
 
             if operator in update_operators:
                 update_operators[operator](temp, keys[-1], value)
