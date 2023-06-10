@@ -29,6 +29,7 @@ class AshenDB:
             >>> db
             <Database: test>
         """
+        db_name = str(db_name)
         for name in await aios.listdir(cls.base):
             if name == db_name:
                 return Database(cls.base + name + "/")
@@ -99,7 +100,7 @@ class AshenDB:
             raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
 
     @classmethod
-    async def create_db(cls, db_name: str) -> Database:
+    async def create_db(cls, db_name: str or int) -> Database:
         """Creates a single database.
 
         Args:
@@ -113,6 +114,7 @@ class AshenDB:
             >>> db
             <Database: test>
         """
+        db_name = str(db_name)
         path = cls.base + db_name
         if await aios.path.exists(path):
             raise AlreadyExists(f"Database '{db_name}' already exists.")

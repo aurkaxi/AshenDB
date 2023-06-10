@@ -300,24 +300,26 @@ async def update_data(document: Document or dict, update: dict) -> Document:
         if value == 1
         else parent_key,
         "$pull": lambda parent_key, key, value: parent_key.__setitem__(
-            key, [item for item in parent_key[key] if item != value]
+            key,
+            [
+                item
+                for item in parent_key[key]
+                if not (
+                    isinstance(item, dict)
+                    and all(k in item and item[k] == v for k, v in value.items())
+                )
+            ],
         )
         if isinstance(value, dict)
         else parent_key.__setitem__(
-            key, [item for item in parent_key[key] if item not in value]
-        )
-        if isinstance(value, list)
-        else parent_key.__setitem__(
-            key, [item for item in parent_key[key] if item != value]
-        )
-        if isinstance(value, str)
-        else parent_key,
-        "$push": lambda parent_key, key, value: parent_key.__setitem__(
             key,
-            parent_key.get(key, []) + value,
+            [item for item in parent_key[key] if item not in value],
+        ),
+        "$push": lambda parent_key, key, value: parent_key.__setitem__(
+            key, parent_key[key].extend(value)
         )
-        if parent_key.get(key)
-        else parent_key,
+        if key in parent_key and hasattr(value, "__iter__")
+        else parent_key.__setitem__(key, value if isinstance(value, list) else [value]),
         "$pullAll": lambda parent_key, key, value: parent_key.__setitem__(
             key, [item for item in parent_key[key] if item not in value]
         )
@@ -339,7 +341,11 @@ async def update_data(document: Document or dict, update: dict) -> Document:
     }
 
     for operator, data in update.items():
+        # if update is {"$set": {"name": "John"}}
+        # then operator is "$set" and data is {"name": "John"}
         for key, value in data.items():
+            # if data is {"name": "John"}
+            # then key is "name" and value is "John"
             keys = key.split(".")
             temp = document
             for key in keys[:-1]:

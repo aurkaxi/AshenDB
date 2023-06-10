@@ -1,4 +1,4 @@
-import aiofiles, json
+import aiofiles, json, urllib, httpx, subprocess
 import aiofiles.os as aios
 from typing import Generator
 from uuid import uuid4
@@ -20,6 +20,41 @@ def gen_id() -> str:
 class Collection:
     def __init__(self, path):
         self.path = path
+
+    async def w3m(self) -> None:
+        """Show the collection in w3m.
+
+        Note:
+            Your system must have w3m installed.
+        """
+
+        json_data = []
+        for file in await aios.scandir(self.path):
+            async with aiofiles.open(file.path, "r") as f:
+                json_data.append(json.loads(await f.read()))
+
+        safe_data = urllib.parse.quote(str(json_data).replace("'", '"'))
+        safe_data = safe_data.replace("%20", "+")
+        data = "jsonData=" + safe_data
+
+        async with httpx.AsyncClient() as client:
+            response = await client.post(
+                url="https://tools.atatus.com/tools/json-to-html",
+                data=data,
+                headers={
+                    "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8"
+                },
+            )
+            response.raise_for_status()
+
+        subprocess.run(
+            ["w3m", "-dump", "-T", "text/html", "-cols", "1000"],
+            input=response.text.replace(
+                "<table>", '<table  border="1" cellpadding="10">'
+            ),
+            encoding="utf-8",
+        )
+        return None
 
     async def get_doc(self, *, id: str or int = None, query: dict = None) -> Document:
         """Get a single document.
@@ -43,6 +78,7 @@ class Collection:
             >>> print(doc)
             {"name": "test"}
         """
+        id = str(id)
         try:
             # check if the "{self.path}/{id}.json" file exists
             path = f"{self.path}/{id}.json"
@@ -108,7 +144,7 @@ class Collection:
             raise ValueError("Either ids or query must be provided")
 
     async def iterate_docs(
-        self, ids: list[str or int], query: dict = None
+        self, *, ids: list[str or int] = None, query: dict = None
     ) -> Generator[Document, None, None]:
         """Iterate over multiple documents.
 
@@ -151,7 +187,12 @@ class Collection:
                         await doc.__ainit__()
                         yield doc
         else:
-            raise ValueError("Either ids or query must be provided")
+            for file in await aios.scandir(self.path):
+                async with aiofiles.open(file.path, "r") as f:
+                    data = json.loads(await f.read())
+                    doc = Document(file.path)
+                    await doc.__ainit__()
+                    yield doc
 
     async def create_doc(self, data: dict) -> Document:
         """Create a document.
@@ -171,13 +212,18 @@ class Collection:
             raise TypeError("Data must be a dict")
 
         try:
-            id = str(data.get("_id"))
-        except:
+            id = str(data["_id"])
+        except KeyError:
             id = gen_id()
-
+            data["_id"] = id
+        # Check if already exist
+        if await aios.path.exists(f"{self.path}/{id}.json"):
+            raise AlreadyExists("Document already exist")
         async with aiofiles.open(f"{self.path}/{id}.json", "w") as f:
             await f.write(json.dumps(data))
-        return Document(f"{self.path}/{id}.json")
+        document = Document(f"{self.path}/{id}.json")
+        await document.__ainit__()
+        return document
 
     async def create_docs(self, datas: list[dict]) -> list[Document]:
         """Create multiple documents.
@@ -281,3 +327,15 @@ class Collection:
         doc = await self.get_doc(id=id, query=query)
         new_doc = await update_data(doc, data)
         return new_doc
+
+    async def count_docs(self) -> int:
+        """Count the number of documents in the collection.
+
+        Example:
+            >>> await coll.count_docs()
+            3
+        """
+        count = 0
+        for _ in await aios.scandir(self.path):
+            count += 1
+        return count
