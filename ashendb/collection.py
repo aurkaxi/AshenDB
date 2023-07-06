@@ -90,8 +90,8 @@ class Collection:
         except NotFound:
             for file in await aios.scandir(self.path):
                 async with aiofiles.open(file.path, "r") as f:
-                    data = json.loads(await f.read())
-                    if await match_data(data, query):
+                    document = json.loads(await f.read())
+                    if await match_data(document, query):
                         doc = Document(file.path)
                         await doc.__ainit__()
                         return doc
@@ -112,7 +112,6 @@ class Collection:
             query: A query to match the documents.
 
         Raises:
-            ValueError: If neither ids nor query is passed.
             NotFound: If no documents are found.
 
         Example:
@@ -141,7 +140,13 @@ class Collection:
                 raise NotFound("No documents found")
             return final
         else:
-            raise ValueError("Either ids or query must be provided")
+            for file in await aios.scandir(self.path):
+                doc = Document(file.path)
+                await doc.__ainit__()
+                final.append(doc)
+            if len(final) == 0 or len(final[0]) == 0:
+                raise NotFound("No documents found")
+            return final
 
     async def iterate_docs(
         self, *, ids: list[str or int] = None, query: dict = None

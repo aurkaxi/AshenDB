@@ -8,3 +8,7 @@ class AlreadyExists(Exception):
 
 class InvalidArgumentType(Exception):
     pass
+
+
+class InvalidClusterName(Exception):
+    pass
