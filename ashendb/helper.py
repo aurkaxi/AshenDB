@@ -1,28 +1,45 @@
-from re import match
-import asyncio, time
-
+import time
 
 from .document import Document
+from .exception import InvalidOperator
 
 
 async def match_data(document: Document or dict, query: dict) -> bool:
     async def and_operator(document: Document or dict, queries: list) -> bool:
-        pass
+        # print("Step 3: ", document, queries)
+        truth = True
+        for qx in queries:
+            # print("Step 4: ", qx)
+            res = await match_query(document, qx)
+            truth = truth and res
+        return truth
 
     async def or_operator(document: Document or dict, queries: list) -> bool:
-        print("Step 3: ", document, queries)
+        # print("Step 3: ", document, queries)
         truth = False
         for qx in queries:
-            print("Step 4: ", qx)
+            # print("Step 4: ", qx)
             res = await match_query(document, qx)
             truth = truth or res
         return truth
 
     async def not_operator(document: Document or dict, queries: list) -> bool:
-        pass
+        # print("Step 3: ", document, queries)
+        truth = True
+        for qx in queries:
+            # print("Step 4: ", qx)
+            res = await match_query(document, qx)
+            truth = truth and res
+        return not truth
 
     async def nor_operator(document: Document or dict, queries: list) -> bool:
-        pass
+        # print("Step 3: ", document, queries)
+        truth = False
+        for qx in queries:
+            # print("Step 4: ", qx)
+            res = await match_query(document, qx)
+            truth = truth or res
+        return not truth
 
     logical_operators = {
         "$and": and_operator,
@@ -53,10 +70,10 @@ async def match_data(document: Document or dict, query: dict) -> bool:
     # }
     all_true = True
     for q in query:
-        print("Step 1: ", q)
+        # print("Step 1: ", q)
         if q not in logical_operators:
             raise Exception(f"Unknown operator {q}")
-        print("Step 2: ", query[q])
+        # print("Step 2: ", query[q])
         res = await logical_operators[q](document, query[q])
         all_true = all_true and res
 
@@ -89,6 +106,7 @@ async def decode_key(document: Document or dict, data: dict) -> tuple:
     temp = document
     keycode = list(data.keys())[0]
     keys = keycode.split(".")
+    # print("keys", keys)
     if "]" in keys[-1]:
         raise Exception("You can't perform operation on a value")
     for key in keys[:-1]:
@@ -239,17 +257,20 @@ async def match_query(document: Document or dict, query: dict) -> bool:
     #     }
     result = True
     for operator, data in query.items():
-        print("Step 5: ", operator, data)
+        # print("Step 5: ", operator, data)
         if operator not in query_operators:
             raise Exception(f"Unknown operator {operator}")
-        for keycode, value in data.items():
-            print("Step 6: ", keycode, value)
-            parent, key, new_value = await decode_key({keycode: value}, document)
-            print("Step 7: ", parent, key, new_value)
+        for keycode, new_value in data.items():
+            # print("Step 6: ", keycode, new_value)
+            parent, key, old_value = await decode_key(document, {keycode: new_value})
+            # print("Step 7: ", parent, key, old_value)
+            # print("step x", result)
             try:
+                # print("Step 8: ", parent[key], new_value)
                 result = result and query_operators[operator](parent[key], new_value)
-                # print(result)
             except KeyError:
+                # print("Step 9: ", False)
+                result = False
                 continue
     return result
 
@@ -403,11 +424,12 @@ async def update_data(document: Document or dict, update: dict) -> Document:
     }
 
     for operator, data in update.items():
+        if operator not in update_operators:
+            raise InvalidOperator(f"{operator} is not a valid update operator")
         for keycode, value in data.items():
             parent, key, new_value = await decode_key(document, {keycode: value})
 
-            if operator in update_operators:
-                update_operators[operator](parent, key, new_value)
+            update_operators[operator](parent, key, new_value)
 
     await document.save()
     return document

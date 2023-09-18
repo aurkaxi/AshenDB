@@ -1,11 +1,16 @@
-import aiofiles, json, urllib, httpx, subprocess
-import aiofiles.os as aios
-from typing import Generator
+import json
+import subprocess
+import urllib
+from typing import Generator, Union
 from uuid import uuid4
 
-from .helper import match_data, update_data
+import aiofiles
+import aiofiles.os as aios
+import httpx
+
 from .document import Document
 from .exception import *
+from .helper import match_data, update_data
 
 
 def gen_id() -> str:
@@ -56,7 +61,11 @@ class Collection:
         )
         return None
 
-    async def get_doc(self, *, id: str or int = None, query: dict = None) -> Document:
+    async def get_doc(
+        self,
+        id: str | None = None,
+        query: dict[str, list[dict[str, dict[str, str]]]] | None = None,
+    ) -> Document:
         """Get a single document.
 
         You can pass either an id or a query. If both are passed then the id will be used.
@@ -78,8 +87,7 @@ class Collection:
             >>> print(doc)
             {"name": "test"}
         """
-        id = str(id)
-        try:
+        if id:
             # check if the "{self.path}/{id}.json" file exists
             path = f"{self.path}/{id}.json"
             if not await aios.path.exists(path):
@@ -87,7 +95,7 @@ class Collection:
             doc = Document(path)
             await doc.__ainit__()
             return doc
-        except NotFound:
+        elif query:
             for file in await aios.scandir(self.path):
                 async with aiofiles.open(file.path, "r") as f:
                     document = json.loads(await f.read())
@@ -96,8 +104,7 @@ class Collection:
                         await doc.__ainit__()
                         return doc
             raise NotFound("No document found")
-        except Exception as e:
-            print(e)
+        else:
             raise ValueError("Either id or query must be provided")
 
     async def get_docs(
@@ -269,8 +276,11 @@ class Collection:
             >>> await coll.delete_doc(1)
         """
         if id:
-            doc = await self.get_doc(id)
-            await doc.delete()
+            path = f"{self.path}/{id}.json"
+            if not await aios.path.exists(path):
+                raise NotFound("No document found")
+            await aios.remove(path)
+            return
         elif query:
             doc = await self.get_doc(query=query)
             await doc.delete()
@@ -295,9 +305,9 @@ class Collection:
         """
         if ids:
             for id in ids:
-                await self.delete_doc(id)
+                await self.del_doc(id)
         elif query:
-            for doc in await self.get_docs(query=query):
+            async for doc in self.get_docs(query=query):
                 await doc.delete()
         else:
             raise ValueError("Either ids or query must be provided")

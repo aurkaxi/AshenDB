@@ -12,3 +12,7 @@ class InvalidArgumentType(Exception):
 
 class InvalidClusterName(Exception):
     pass
+
+
+class InvalidOperator(Exception):
+    pass

@@ -39,3 +39,12 @@ class Document(dict):
         async with aiofiles.open(self.filepath, mode="w") as f:
             contents = json.dumps(self)
             await f.write(contents)
+
+    async def delete(self) -> None:
+        """Delete document
+
+        Returns:
+            Document: None
+        """
+        await aiofiles.os.remove(self.filepath)
+        return

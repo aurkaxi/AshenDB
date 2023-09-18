@@ -41,7 +41,6 @@ class AshenDB:
                 return Database(self.cluster + name + "/")
         raise NotFound(f"Database '{db_name}' does not exist.")
 
-    @classmethod
     async def get_dbs(self, db_names: list[str] = None) -> list[Database]:
         """Get multiple databases from list of database names.
 
@@ -75,7 +74,6 @@ class AshenDB:
 
         return final
 
-    @classmethod
     async def iterate_dbs(self, db_names: list[str]) -> Generator[Database, None, None]:
         """Iterate over multiple databases from list of database names.
 
@@ -105,7 +103,6 @@ class AshenDB:
         else:
             raise InvalidArgumentType(f"Expected list, got {type(db_names)}.")
 
-    @classmethod
     async def create_db(self, db_name: str or int) -> Database:
         """Creates a single database.
 
@@ -128,7 +125,6 @@ class AshenDB:
             await aios.mkdir(path)
             return Database(path + "/")
 
-    @classmethod
     async def create_dbs(self, db_names: list[str]) -> list[Database]:
         """Create multiple databases.
 
@@ -153,7 +149,6 @@ class AshenDB:
 
         return final
 
-    @classmethod
     async def iterate_create_dbs(
         self, db_names: list[str]
     ) -> Generator[Database, None, None]:
@@ -181,7 +176,6 @@ class AshenDB:
         for name in db_names:
             yield await self.create_one(name)
 
-    @classmethod
     async def del_db(self, db_name: str) -> None:
         """Delete a single database.
 
@@ -202,7 +196,6 @@ class AshenDB:
         else:
             raise Exception(f"Database '{db_name}' does not exist.")
 
-    @classmethod
     async def del_dbs(self, db_names: list[str]) -> None:
         """Delete multiple databases.
 
